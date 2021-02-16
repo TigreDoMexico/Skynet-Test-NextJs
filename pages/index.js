@@ -37,7 +37,8 @@ const Home = ({ chamados }) => {
       <main className={styles.main}>
         <Input
           onChangeText={setChamadoText}
-          chamadoText={chamadoText}
+          value={chamadoText}
+          placeholder="Nome do Chamado"
           containsButton
           buttonText="Criar Chamado"
           onClickButton={onClickCriarChamado}
@@ -51,12 +52,12 @@ const Home = ({ chamados }) => {
             <label>Título do Chamado</label>
             <Input
               onChangeText={setChamadoText}
-              chamadoText={chamadoText}
+              value={chamadoText}
             />
             <label>Descrição do Chamado</label>
             <Input
               onChangeText={setChamadoDescription}
-              chamadoText={chamadoDescription}
+              value={chamadoDescription}
             />
 
           </ModalBody>
