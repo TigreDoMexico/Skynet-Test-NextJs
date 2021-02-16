@@ -1,0 +1,53 @@
+.modalOverlay {
+    position: fixed;
+    z-index: 1050;
+    width: 200%;
+    height: 200%;
+    margin-bottom: -100px;
+    background-color: rgba(0,0,0,0.5);
+  }
+
+  .modalWrapper {
+    position: fixed;
+    top: 50px;
+    z-index: 1060;
+  }
+
+  .modal {
+    z-index: 100;
+    background: white;
+    position: relative;
+    min-width: 30rem;
+    padding: 8px;
+    border-radius: 4px;
+  }
+
+  .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0;
+    font-weight: bold;
+  }
+
+  .modalButtonClose {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .modalBody {
+    padding: 8px 0;
+  }
+
+  .modalFooter {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 8px 0;
+  }
+
+  .listGroup {
+    width: 22rem;
+  }

@@ -1,65 +1,88 @@
 import Head from 'next/head'
+import { useState } from 'react';
 import styles from '../styles/Home.module.css'
+import { postChamado, getAllChamados } from '../services/ChamadoService'
+import Modal, { ModalHeader, ModalBody, ModalFooter, useModal } from '../components/modal'
+import Input from '../components/input'
+import { ListChamados } from '../components/list'
 
-export default function Home() {
+const Home = ({ chamados }) => {
+  const [chamadoText, setChamadoText] = useState('')
+  const [chamadoDescription, setChamadoDescription] = useState('')
+  const [chamadosList, setChamadosList] = useState(chamados)
+
+  const { isShowing, toggle } = useModal();
+  const onClickCriarChamado = () => toggle()
+
+  const onCriarChamado = () => {
+    if (chamadoText) {
+      const id = chamadosList.length + 1
+
+      postChamado(id, chamadoText).then(() => {
+        setChamadosList([...chamadosList, { id, text: chamadoText }])
+        setChamadoText('')
+        setChamadoDescription('')
+
+        toggle()
+      })
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Skynet</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <Input
+          onChangeText={setChamadoText}
+          chamadoText={chamadoText}
+          containsButton
+          buttonText="Criar Chamado"
+          onClickButton={onClickCriarChamado}
+        />
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+        <Modal {...{ isShowing, toggle }}>
+          <ModalHeader {...{ toggle }}>
+            Novo Chamado #{chamadosList.length + 1}
+          </ModalHeader>
+          <ModalBody>
+            <label>Título do Chamado</label>
+            <Input
+              onChangeText={setChamadoText}
+              chamadoText={chamadoText}
+            />
+            <label>Descrição do Chamado</label>
+            <Input
+              onChangeText={setChamadoDescription}
+              chamadoText={chamadoDescription}
+            />
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          </ModalBody>
+          <ModalFooter>
+            <button className="btn btn-success" type="button" onClick={onCriarChamado}>
+              Criar
+            </button>
+            <button className="btn btn-danger" type="button" onClick={toggle}>
+              Fechar
+            </button>
+          </ModalFooter>
+        </Modal>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <div>
+          <ListChamados listaChamados={chamadosList}/>
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
   )
 }
+
+export async function getServerSideProps() {
+  const data = await getAllChamados()
+  return {
+    props: { chamados: data },
+  }
+}
+
+export default Home
