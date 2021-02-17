@@ -1,32 +1,3 @@
 {
-  "chamados": [
-    {
-      "id": 1,
-      "text": "Validar Campo"
-    },
-    {
-      "id": 2,
-      "text": "OCR"
-    },
-    {
-      "id": 3,
-      "text": "Limpar Cache"
-    },
-    {
-      "id": 4,
-      "text": "FAZER LIMPEZA"
-    },
-    {
-      "id": 5,
-      "text": "Chama"
-    },
-    {
-      "id": 6,
-      "text": "ADADADAD"
-    },
-    {
-      "id": 7,
-      "text": "Validar Horóscopo"
-    }
-  ]
+  "chamados": []
 }
