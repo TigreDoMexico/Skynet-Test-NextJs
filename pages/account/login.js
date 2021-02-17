@@ -1,13 +1,25 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
+import Head from 'next/head'
 import Input from '../../components/input'
 import styles from '../../styles/pages/Account.module.css'
 
 const Login = () => {
+    const router = useRouter()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const onSubmitLogin = () => {
+        if(email && password)
+            router.push('/')
+    }
+
     return(
         <div className={styles.container}>
+            <Head>
+                <title>Login</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <div className={styles.loginArea}>
                 <div>
                     <h3 className={styles.title}>Faça seu login</h3>
@@ -27,10 +39,11 @@ const Login = () => {
                         <button
                             type="button"
                             className="btn btn-default"
-                            style={{backgroundColor: '#00AEEF', width: '100px'}}>
+                            style={{backgroundColor: '#00AEEF', width: '100px'}}
+                            onClick={onSubmitLogin}>
                             <span style={{color: '#fff'}}>Entrar</span>
                         </button>
-                        <a>Esqueci minha Senha</a>
+                        <a href="#">Esqueci minha Senha</a>
                     </div>
                     <button
                         type="button"
