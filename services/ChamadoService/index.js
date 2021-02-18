@@ -15,8 +15,7 @@ export const getChamadoById = async (id) => {
     return await response.data;
 }
 
-export const postChamado = async (numeroDoChamado, chamadoText) => {
-    const newChamado = {id: numeroDoChamado, text: chamadoText}
+export const postChamado = async (newChamado) => {
     return axios.post('http://localhost:8000/chamados', newChamado)
 }
 

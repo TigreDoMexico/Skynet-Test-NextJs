@@ -4,11 +4,9 @@ import Link from 'next/link'
 export const ListChamados = ({ listaChamados }) => {
     return (
         <div>
-            {listaChamados.length === 0 ?
-                <p>Sem chamados na sua fila</p>
-                :
-                (<table className="table">
-                    <thead>
+            <table className="table">
+                <thead>
+                    <tr>
                         <th scope="col"></th>
                         <th scope="col">Código</th>
                         <th scope="col">Título</th>
@@ -17,24 +15,35 @@ export const ListChamados = ({ listaChamados }) => {
                         <th scope="col">Status</th>
                         <th scope="col">Prioridade</th>
                         <th scope="col">Prazo SLA</th>
-                    </thead>
-                    <tbody>
-                        {listaChamados.map((el, idx) => {
-                            return (<ListChamadosElement chamado={el} key={idx} />)
-                        })}
-                    </tbody>
-                </table>)
-            }
+                    </tr>
+                </thead>
+                <tbody>
+                    {listaChamados.map((el, idx) => {
+                        return (<ListChamadosElement chamado={el} key={idx} />)
+                    })}
+                </tbody>
+            </table>
         </div>
     )
 }
 
-const ListChamadosElement = ({chamado}) => {
+const ListChamadosElement = ({ chamado }) => {
+    const statusText = (statusId) => {
+        switch(statusId){
+            case 1:
+                return "Criado"
+            case 2:
+                return "Em andamento"
+            case 3:
+                return "Finalizado"
+        }
+    }
+
     return (
         <tr>
             <td>
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input"/>
+                    <input type="checkbox" class="form-check-input" />
                 </div>
             </td>
             <th scope="row">
@@ -42,14 +51,14 @@ const ListChamadosElement = ({chamado}) => {
             </th>
             <td>
                 <Link href="/chamado/[id]" as={`/chamado/${chamado.id}`}>
-                    <a>{chamado.text}</a>
+                    <a>{chamado.assunto}</a>
                 </Link>
             </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{chamado.cliente}</td>
+            <td>{chamado.produto}</td>
+            <td>{statusText(chamado.status)}</td>
+            <td>{chamado.prioridade}</td>
+            <td>{chamado.prazoSLA}</td>
         </tr>
     )
 }
